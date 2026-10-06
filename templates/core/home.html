@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Home | Weather Forecasting{% endblock %}
+
+{% block content %}
+    <h1>Weather Forecasting</h1>
+
+    {% if user.is_authenticated %}
+        <p>Welcome back, {{ user.email }}.</p>
+        <p>Your weather dashboard will be built here.</p>
+    {% else %}
+        <p>Search weather forecasts and save your favorite locations.</p>
+        <p>
+            <a href="{% url 'account_signup' %}">Create an account</a>
+            or
+            <a href="{% url 'account_login' %}">log in</a>.
+        </p>
+    {% endif %}
+{% endblock %}

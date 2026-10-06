@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Change password | Weather Forecasting{% endblock %}
+
+{% block content %}
+    <h1>Change password</h1>
+
+    <form method="post" action="{% url 'account_change_password' %}">
+        {% csrf_token %}
+
+        {{ form.non_field_errors }}
+
+        {% for field in form %}
+            <div>
+                {{ field.label_tag }}
+                {{ field }}
+                {{ field.errors }}
+
+                {% if field.help_text %}
+                    <div>{{ field.help_text|safe }}</div>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <button type="submit">Change password</button>
+    </form>
+{% endblock %}

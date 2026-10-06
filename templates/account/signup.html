@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Create account | Weather Forecasting{% endblock %}
+
+{% block content %}
+    <h1>Create account</h1>
+
+    <form method="post" action="{% url 'account_signup' %}">
+        {% csrf_token %}
+
+        {{ form.non_field_errors }}
+
+        {% for field in form %}
+            <div>
+                {{ field.label_tag }}
+                {{ field }}
+                {{ field.errors }}
+
+                {% if field.help_text %}
+                    <div>{{ field.help_text|safe }}</div>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        {% if redirect_field_value %}
+            <input
+                type="hidden"
+                name="{{ redirect_field_name }}"
+                value="{{ redirect_field_value }}"
+            >
+        {% endif %}
+
+        <button type="submit">Create account</button>
+    </form>
+
+    <p>
+        Already registered?
+        <a href="{% url 'account_login' %}">Log in</a>.
+    </p>
+{% endblock %}

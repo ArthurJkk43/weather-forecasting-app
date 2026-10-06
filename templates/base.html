@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Weather Forecasting{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <nav aria-label="Main navigation">
+            <a href="{% url 'core:home' %}">Weather Forecasting</a>
+
+            {% if user.is_authenticated %}
+                <span>Signed in as {{ user.email }}</span>
+
+                <form method="post" action="{% url 'account_logout' %}">
+                    {% csrf_token %}
+                    <button type="submit">Log out</button>
+                </form>
+            {% else %}
+                <a href="{% url 'account_login' %}">Log in</a>
+                <a href="{% url 'account_signup' %}">Create account</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    {% if messages %}
+        <section aria-label="Notifications">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </section>
+    {% endif %}
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

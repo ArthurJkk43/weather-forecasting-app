@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Confirm email | Weather Forecasting{% endblock %}
+
+{% block content %}
+    <h1>Confirm email address</h1>
+
+    {% if confirmation %}
+        {% if can_confirm %}
+            <p>
+                Confirm that
+                <strong>{{ confirmation.email_address.email }}</strong>
+                belongs to your account.
+            </p>
+
+            <form
+                method="post"
+                action="{% url 'account_confirm_email' confirmation.key %}"
+            >
+                {% csrf_token %}
+                <button type="submit">Confirm email</button>
+            </form>
+        {% else %}
+            <p>
+                This email address cannot be confirmed because it is already
+                associated with another account.
+            </p>
+        {% endif %}
+    {% else %}
+        <p>This confirmation link is invalid or has expired.</p>
+
+        <p>
+            <a href="{% url 'account_login' %}">
+                Return to login and request another verification email
+            </a>
+        </p>
+    {% endif %}
+{% endblock %}
